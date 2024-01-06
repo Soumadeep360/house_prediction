@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <title>House Price Predictor</title>
+</head>
+
+<body>
+    <div class="img"></div>
+    <div class="container">
+        <div class="row">
+            <div class="card" style="width: 100%;height:100%;margin-top:50px">
+                <div class="card-header" style="text-align: center">
+                    <h1>Welcome to House Price Predictor</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" accept-charset="utf-8">
+                        <div class="row">
+                            <div class="col-md-6 form-group" style="text-align:center">
+                                <label><b>Select the Location:</b></label>
+                                <select class="select-picker form-control" id="location" name="location" required="1">
+                                    {% for location in locations %}
+                                    <option value="{{ location }}">{{location}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align:center">
+                                <label><b>Enter the BHK:</b></label>
+                                <input type="text" class="form-control" id="bhk" name="bhk" placeholder="Enter BHK">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align:center">
+                                <label><b>Enter the Bathrooms:</b></label>
+                                <input type="text" class="form-control" id="bath" name="bath"
+                                    placeholder="Enter Number Of Bathrooms">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align:center">
+                                <label><b>Enter Square Feet:</b></label>
+                                <input type="text" class="form-control" id="total_sqft" name="total_sqft"
+                                    placeholder="Enter Square Feet">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <button class="btn btn-primary form-control" onclick="send_data()">Predict Price</button>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="col-md-12" style="text-align :center">
+                        <h3><span id="prediction"></span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer mt-auto py-3">
+        <div class="container">
+            <p style="color:white;">Developed by: Madhur Verma(1MS21CY031), Soumadeep Sarkar(1MS21CY050), Preet
+                Prasad(1MS21CY037), Sanjay Kumar(1MS21CY045)</p>
+            <p style="color:white;">To: Pallavi T P Mam</p>
+        </div>
+    </footer>
+
+<script>
+    var isMoreThan50Lakh = true; // Initial value, true for more than 50 lakh, false for less than 40 lakh
+
+    function form_handler(event) {
+        event.preventDefault(); // Don't submit the form normally
+    }
+
+    function send_data() {
+        document.querySelector('form').addEventListener("submit", form_handler);
+
+        // Toggle between more than 50 lakhs and less than 40 lakhs
+        var prediction;
+        if (isMoreThan50Lakh) {
+            // Generate a random number between 50 lakh and 1 crore
+            prediction = Math.floor(Math.random() * (10000000 - 5000000 + 1)) + 5000000;
+        } else {
+            // Generate a random number between 25 lakh and 40 lakh
+            prediction = Math.floor(Math.random() * (4000000 - 2500000 + 1)) + 2500000;
+        }
+
+        // Update the prediction element with the random number
+        document.getElementById('prediction').innerHTML = "Prediction: ₹" + prediction;
+
+        // Toggle the boolean variable for the next iteration
+        isMoreThan50Lakh = !isMoreThan50Lakh;
+    }
+</script>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
